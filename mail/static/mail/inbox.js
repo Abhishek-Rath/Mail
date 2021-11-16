@@ -36,7 +36,24 @@ function load_mailbox(mailbox) {
   document.querySelector('#compose-view').style.display = 'none';
 
   // Show the mailbox name
-  document.querySelector('#emails-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
+  const email_view = document.querySelector('#emails-view');
+  email_view.innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
+
+  fetch('/emails/' + mailbox)
+  .then(response => response.json())
+  .then(emails => {
+      emails.forEach(email => {
+        let div = document.createElement('div');
+        div.className = email['read'] ? 'email-read' : 'email-unread';
+        div.innerHTML = 
+        `<span class="sender col-3">${email['sender']}</span>
+        <span class="subject col-6">${email['subject']}</span>
+        <span class="timestamp col-3"> ${email['timestamp']} </span>
+        `;
+        email_view.appendChild(div);
+      });
+    })
+
 }
 
 
