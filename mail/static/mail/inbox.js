@@ -46,7 +46,7 @@ function load_mailbox(mailbox) {
         let div = document.createElement('div');
         div.className = email['read'] ? 'email-read' : 'email-unread';
         div.innerHTML = 
-        `<span class="sender col-3">${email['sender']}</span>
+        `<span class="sender col-3"><strong>${email['sender']}</strong></span>
         <span class="subject col-6">${email['subject']}</span>
         <span class="timestamp col-3"> ${email['timestamp']} </span>
         `;
