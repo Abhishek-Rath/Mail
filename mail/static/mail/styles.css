@@ -1,3 +1,25 @@
 textarea {
     min-height: 400px;
 }
+ h2 {
+     text-align: center;
+ }
+.email-read, .email-unread {
+    border: 5px  solid #e6e6e6;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 2%;
+}
+
+.timestamp {
+    float: right;
+    text-align: right;
+}
+
+.register, .login {
+    border: 5px solid #e6e6e6;
+    padding: 10px;
+    margin-top: 2%;
+    margin-left: 10%
+    margin-right: 10%
+}
