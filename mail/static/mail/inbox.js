@@ -106,9 +106,9 @@ function view_mail(id) {
       <li class="list-group-item"><strong>Time:</strong> <span>${email['timestamp']}</span></li>
     </ul>
     <hr>
-    <div class="email-body">
+    <p class="m-2 email-body">
       ${email.body}
-    </div>
+    </p>
     <hr>
     `;
   
@@ -180,8 +180,14 @@ function reply_mail(id) {
     document.querySelector('#compose-subject').value = subject;
     
 
-    let body = '\n\n On ' + email['timestamp'] + ', ' + email['sender'] + ' wrote:\n ' + email['body'] + '\n\n\n';
+    // let body = '\n On ' + email['timestamp'] + ', ' + email['sender'] + ' wrote:\n ' + email['body'] + '\n';
+    // document.querySelector('#compose-body').value = body + '\n';
+
+    let body = 
+    `On ${email['timestamp']}, ${email['sender']} wrote: \n ${email['body']} 
+    `;
     document.querySelector('#compose-body').value = body;
+    document.querySelector('#compose-body').style.color = 'purple';
 
   })
 }
