@@ -21,11 +21,12 @@ function compose_email() {
   document.querySelector('#emails-view').style.display = 'none';
   document.querySelector('#compose-view').style.display = 'block';
 
-  // Clear out composition fields
+  // Intially, Clear out composition fields
   document.querySelector('#compose-recipients').value = '';
   document.querySelector('#compose-subject').value = '';
   document.querySelector('#compose-body').value = '';
 }
+
 
 // Function to send email
 function send_mail(event) {
@@ -84,8 +85,7 @@ function load_mailbox(mailbox) {
 
 }
 
-
-
+// Function to read email
 function view_mail(id) {
   
   fetch(`/emails/${id}`)
@@ -104,16 +104,54 @@ function view_mail(id) {
       <li class="list-group-item"><strong>To: </strong><span>${email['recipients']}</span></li>
       <li class="list-group-item"><strong>Subject:</strong> <span>${email['subject']}</span</li>
       <li class="list-group-item"><strong>Time:</strong> <span>${email['timestamp']}</span></li>
-      <li class="list-group-item"><button class="btn btn-sm btn-outline-primary">Reply</button></li>
     </ul>
     <hr>
-    <div>
+    <div class="email-body">
       ${email.body}
     </div>
+    <hr>
     `;
+  
+    const reply = document.createElement('button');
+    reply.className = "btn btn-primary";
+    reply.innerHTML = `Reply`;
+    document.querySelector('#email-view').appendChild(reply);
+
     console.log(email);
-    document.body.appendChild(div);
+
+    // Archive or Unarchive button
+    const archive = document.createElement('button');
+    archive.className = "mx-2 btn btn-secondary";
+    archive.innerHTML = email['archived'] ? "Unarchive" : "Archive";
+    document.querySelector('#email-view').appendChild(archive);
+    archive.addEventListener('click', () => {
+      archive_unarchive_mail(email['id']);
+    });
 
   })
+
+  fetch(`/emails/${id}`, {
+    method: 'PUT',
+    body: JSON.stringify({
+        read: true
+    })
+  })
   
+}
+
+// Functio to archive or unarchive mail
+function archive_unarchive_mail(id) {
+
+  fetch(`/emails/${id}`)
+  .then(response => response.json())
+  .then(email => {
+    fetch(`/emails/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify({
+          archived: !email['archived']
+      })
+    })
+    .then(response => load_mailbox('inbox'))
+  })  
+
 }
