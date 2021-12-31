@@ -5,8 +5,18 @@ textarea {
      margin-top: 2%;
      text-align: center;
  }
-.email-read, .email-unread {
+.email-unread {
+    background-color: #ffffff;
     border: 5px  solid #e6e6e6;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 2%;
+    cursor: pointer;
+}
+
+.email-read {
+    background-color: gray;
+    border: 5px  solid black;
     padding: 10px;
     border-radius: 10px;
     margin-top: 2%;
