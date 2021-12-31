@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
+
+* {
+    font-family: 'Quicksand', sans-serif;
+}
+
 textarea {
     min-height: 400px;
 }
@@ -7,7 +13,7 @@ textarea {
  }
 .email-unread {
     background-color: #ffffff;
-    border: 5px  solid #e6e6e6;
+    border: 1px  solid #e6e6e6;
     padding: 10px;
     border-radius: 10px;
     margin-top: 2%;
@@ -15,8 +21,8 @@ textarea {
 }
 
 .email-read {
-    background-color: gray;
-    border: 5px  solid black;
+    background-color: #dee4e9;
+    border: 1px  solid #dee4e9;
     padding: 10px;
     border-radius: 10px;
     margin-top: 2%;
