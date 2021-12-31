@@ -112,17 +112,27 @@ function view_mail(id) {
     <hr>
     `;
   
+    // Reply Button
     const reply = document.createElement('button');
     reply.className = "btn btn-primary";
     reply.innerHTML = `Reply`;
     document.querySelector('#email-view').appendChild(reply);
+    reply.addEventListener('click', () => {
+      reply_mail(id)
+    });
 
     console.log(email);
 
     // Archive or Unarchive button
     const archive = document.createElement('button');
     archive.className = "mx-2 btn btn-secondary";
-    archive.innerHTML = email['archived'] ? "Unarchive" : "Archive";
+    
+    // check if the mail is archived or not
+    if(email['archived']) {
+      archive.innerHTML = 'Unarchive';
+    } else {
+      archive.innerHTML = 'Archive';
+    }
     document.querySelector('#email-view').appendChild(archive);
     archive.addEventListener('click', () => {
       archive_unarchive_mail(email['id']);
@@ -130,6 +140,7 @@ function view_mail(id) {
 
   })
 
+  // Mark email as read
   fetch(`/emails/${id}`, {
     method: 'PUT',
     body: JSON.stringify({
@@ -139,7 +150,7 @@ function view_mail(id) {
   
 }
 
-// Functio to archive or unarchive mail
+// Function to archive or unarchive mail
 function archive_unarchive_mail(id) {
 
   fetch(`/emails/${id}`)
@@ -153,5 +164,24 @@ function archive_unarchive_mail(id) {
     })
     .then(response => load_mailbox('inbox'))
   })  
+}
 
+function reply_mail(id) {
+  fetch(`emails/${id}`)
+  .then(response => response.json())
+  .then(email => {
+    compose_email();
+    document.querySelector('#email-view').style.display = 'none';
+
+    document.querySelector('#compose-recipients').value = email['sender'];
+    
+    let subject = 'Re: '+ email['subject']
+    console.log(subject);
+    document.querySelector('#compose-subject').value = subject;
+    
+
+    let body = '\n\n On ' + email['timestamp'] + ', ' + email['sender'] + ' wrote:\n ' + email['body'] + '\n\n\n';
+    document.querySelector('#compose-body').value = body;
+
+  })
 }
